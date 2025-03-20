@@ -1,18 +1,16 @@
 package com.julioepiske.appLojaOnline.service;
 
-import java.util.List;
-import java.util.Optional;
+import com.julioepiske.appLojaOnline.model.User;
+import com.julioepiske.appLojaOnline.repository.UserRepository;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.julioepiske.appLojaOnline.repository.UserRepository;
-
 import lombok.AllArgsConstructor;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -21,7 +19,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public List<User> lisAll() {
+    public List<User> listAll() {
         return userRepository.findAll();
     }
 
@@ -30,7 +28,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public User findiById(Long id) {
+    public User findById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
@@ -42,15 +40,21 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    // método necessário do spring security
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário nçao encontrado com o email: " + email));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com o email: " + email));
 
-        return User.builder()
-            .username(user.getName())
-            .password(user.getPassword())
-            .roles("USER")
-            .build();
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getEmail())
+                .password(user.getPassword())
+                .roles("USER")
+                .build();
+    }
+
+    public Long findIdByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(User::getId)
+                .orElse(null);
     }
 }
