@@ -16,19 +16,16 @@ public class ConfigSecurity {
 
         http.authorizeRequests(auth -> auth
                 .requestMatchers("/login", "/register").permitAll()
-                .anyRequest().authenticated()
-        )
-        .formLogin(form -> form
-            .loginPage("/login") // rota da pagina de login
-            .defaultSuccessUrl("/home", true)
-            .permitAll()
-        )
-        .logout(logout -> logout
+                .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login") // rota da pagina de login
+                        .defaultSuccessUrl("/home", true)
+                        .permitAll())
+                .logout(logout -> logout
                         .logoutUrl("/logout") // url de logout
                         .logoutSuccessUrl("/login") // manda pra login depois do logout
-                        .permitAll()
-        )
-        .csrf(csrf -> csrf.disable());
+                        .permitAll())
+                .csrf(csrf -> csrf.disable());
 
         return http.build();
     }

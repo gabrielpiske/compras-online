@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Loja Online</title>
     <link rel="stylesheet" href="../static/css/login.css">
 </head>
 
 <body>
     <div class="container">
 
-        <div class="login">
+        <div class="login" id="login-form">
             <h1>Login</h1>
             <form method="post">
                 <label for="email">Email:</label>
@@ -25,11 +25,11 @@
             </form>
             <hr>
             <div class="go-register">
-                <p>Não tem uma conta? <a href="#" data-bs-target="#cadastroModal">Crie uma agora</a></p>
+                <p>Não tem uma conta? <a href="javascript:void(0);" onclick="toggleForms()">Crie uma agora</a></p>
             </div>
         </div>
 
-        <div class="register">
+        <div class="register" id="register-form" style="display:none;">
             <form method="post">
                 <h1>Register</h1>
                 <label for="name">Nome:</label>
@@ -48,10 +48,19 @@
             </form>
             <hr>
             <div class="cancel-register">
-                <p>Já tem uma conta? <a href="#" data-bs-target="#cadastroModal">Retornar ao login</a></p>
+                <p>Já tem uma conta? <a href="javascript:void(0);" onclick="toggleForms()">Retornar ao login</a></p>
             </div>
         </div>
     </div>
+    
+    <script>
+        function toggleForms() {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            loginForm.style.display = (loginForm.style.display === 'none') ? 'block' : 'none';
+            registerForm.style.display = (registerForm.style.display === 'none') ? 'block' : 'none';
+        }
+    </script>
 </body>
 
 </html>
