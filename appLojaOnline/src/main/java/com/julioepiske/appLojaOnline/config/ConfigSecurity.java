@@ -15,7 +15,7 @@ public class ConfigSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.authorizeRequests(auth -> auth
-                .requestMatchers("/login", "/register").permitAll()
+                .requestMatchers("/login", "/register", "/css/**").permitAll()
                 .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login") // rota da pagina de login
