@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AppLojaOnlineApplication<appLojaOnline>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.julioepiske.appLojaOnline.AppLojaOnlineApplication",
+            "projectName": "appLojaOnline",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

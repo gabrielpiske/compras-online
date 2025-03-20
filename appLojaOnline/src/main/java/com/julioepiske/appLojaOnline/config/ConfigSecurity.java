@@ -10,6 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class ConfigSecurity {
 
+    @SuppressWarnings({ "removal", "deprecation" }) // se der pau comenta
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
