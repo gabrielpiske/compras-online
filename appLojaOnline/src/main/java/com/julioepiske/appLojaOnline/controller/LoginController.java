@@ -29,45 +29,46 @@ public class LoginController {
         return "index";
     }
 
-    // @PostMapping("/login")
-    // public String authenticateUser(@RequestParam String email,
-    //                                @RequestParam String senha,
-    //                                Model model) {
-    //     // Buscar o usuário pelo email
-    //     return userService.findByEmail(email).map(user -> {
-    //         // Verificar se a senha corresponde
-    //         if (passwordEncoder.matches(senha, user.getPassword())) {
-    //             model.addAttribute("user", user);
-    //             return "redirect:/home";
-    //         } else {
-    //             model.addAttribute("erro", "Senha incorreta.");
-    //             return "index";  // Retorna para a página de login com erro
-    //         }
-    //     }).orElseGet(() -> {
-    //         model.addAttribute("erro", "Usuário não encontrado.");
-    //         return "index";  // Retorna para a página de login com erro
-    //     });
-    // }
+    @PostMapping("/login")
+    public String authenticateUser(@RequestParam String email,
+            @RequestParam String password,
+            Model model) {
+        System.out.println("Buscando usuário com email: " + email); // Log para depuração
+        return userService.findByEmail(email).map(user -> {
+            // Verificar se a senha corresponde
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                model.addAttribute("user", user);
+                return "redirect:/home";
+            } else {
+                model.addAttribute("erro", "Senha incorreta.");
+                return "index";
+            }
+        }).orElseGet(() -> {
+            model.addAttribute("erro", "Usuário não encontrado.");
+            return "index";
+        });
+    }
 
     @PostMapping("/register")
-    public String registerUser(@Validated @ModelAttribute("user") User user, 
-                               BindingResult result, Model model) {
+    public String registerUser(@Validated @ModelAttribute("user") User user,
+            BindingResult result, Model model) {
+        // Verifica se houve erro de validação no formulário
         if (result.hasErrors()) {
-            return "register";  // Se houver erros de validação, retorna para o formulário
+            return "register"; // Se houver erros de validação, retorna para o formulário
         }
 
         // Verifica se o email já está cadastrado
         if (userService.findByEmail(user.getEmail()).isPresent()) {
             model.addAttribute("error", "Email já cadastrado.");
-            return "index";  // Retorna para a página de login com erro
+            return "index"; // Retorna para a página de login com erro
         }
 
         // Codifica a senha antes de salvar
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        /* user.setPassword(passwordEncoder.encode(user.getPassword())); */
         userService.save(user);
 
         model.addAttribute("mensagem", "Cadastro realizado com sucesso!");
-        return "redirect:/login";  // Redireciona para o login após o registro
+        return "redirect:/login"; // Redireciona para o login após o registro
     }
 
     @GetMapping("/home")
