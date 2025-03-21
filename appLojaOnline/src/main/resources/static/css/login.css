@@ -1,58 +1,119 @@
+/* Definições gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Corpo do site */
 body {
-    font-family: Arial, sans-serif;
+    background-color: #1c1c1c; /* Cor escura de fundo */
+    color: #f1f1f1; /* Cor de texto clara */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
-    background-color: #f4f4f9;
-}
-
-.container {
-    width: 350px;
-    background-color: white;
     padding: 20px;
+}
+
+/* Container principal */
+.container {
+    background-color: #2d2d2d; /* Fundo escuro para o container */
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-.login, .register {
-    display: none;
+/* Títulos */
+h1 {
+    color: #f39c12; /* Cor dourada suave */
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
 }
 
-.login.active, .register.active {
-    display: block;
-}
-
+/* Formulário */
 form {
     display: flex;
     flex-direction: column;
 }
 
-form label {
+label {
+    color: #f1f1f1;
+    margin-bottom: 5px;
     font-weight: bold;
-    margin-top: 10px;
+    font-size: 1rem;
 }
 
-form input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
+input[type="text"], input[type="password"], input[type="email"] {
+    padding: 12px;
+    margin-bottom: 15px;
+    background-color: #333;
+    border: 1px solid #444;
     border-radius: 5px;
+    color: #f1f1f1;
+    font-size: 1rem;
 }
 
-form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+    outline: none;
+    border-color: #f39c12;
+}
+
+/* Botões */
+button {
+    padding: 12px;
+    background-color: #f39c12;
     border: none;
-    cursor: pointer;
     border-radius: 5px;
-    margin-top: 10px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
 }
 
-form button:hover {
-    background-color: #45a049;
+button:hover {
+    background-color: #e67e22;
+}
+
+/* Links */
+a {
+    color: #f39c12;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Seção de login */
+.login, .register {
+    display: block;
+}
+
+/* Layout de alternância entre login e registro */
+.go-register, .cancel-register {
+    text-align: center;
+    margin-top: 20px;
+}
+
+hr {
+    border: 1px solid #444;
+    margin: 20px 0;
+}
+
+/* Responsividade */
+@media (max-width: 500px) {
+    .container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
 }
