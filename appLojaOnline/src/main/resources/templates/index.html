@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja Online</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <!--<link rel="stylesheet" th:href="@{/css/login.css}">-->
 </head>
 
 <body>
@@ -13,7 +13,7 @@
 
         <div class="login" id="login-form">
             <h1>Login</h1>
-            <form method="post">
+            <form method="post" th:action="@{/login}"</form>>
                 <label for="email">Email:</label>
                 <input type="text" id="login-email" name="email" required>
 
@@ -30,7 +30,7 @@
         </div>
 
         <div class="register" id="register-form" style="display:none;">
-            <form method="post">
+            <form method="post" th:action="@{/register}">
                 <h1>Register</h1>
                 <label for="name">Nome:</label>
                 <input type="text" id="register-name" name="name" required>
