@@ -29,26 +29,6 @@ public class LoginController {
         return "index";
     }
 
-    @PostMapping("/login")
-    public String authenticateUser(@RequestParam String email,
-            @RequestParam String password,
-            Model model) {
-        System.out.println("Buscando usuário com email: " + email); // Log para depuração
-        return userService.findByEmail(email).map(user -> {
-            // Verificar se a senha corresponde
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                model.addAttribute("user", user);
-                return "redirect:/home";
-            } else {
-                model.addAttribute("erro", "Senha incorreta.");
-                return "index";
-            }
-        }).orElseGet(() -> {
-            model.addAttribute("erro", "Usuário não encontrado.");
-            return "index";
-        });
-    }
-
     @PostMapping("/register")
     public String registerUser(@Validated @ModelAttribute("user") User user,
             BindingResult result, Model model) {
