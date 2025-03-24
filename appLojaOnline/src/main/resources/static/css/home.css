@@ -1,0 +1,121 @@
+/* Importação da fonte Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+/* Definições gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif; /* Font family alterada para Montserrat */
+}
+
+/* Corpo do site */
+body {
+    background-color: #1c1c1c; /* Cor escura de fundo */
+    color: #f1f1f1; /* Cor de texto clara */
+    display: flex;
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+    min-height: 100vh; /* Faz com que o body ocupe toda a altura da tela */
+    flex-direction: column; /* Empilha os itens verticalmente */
+    text-align: center; /* Centraliza o texto dentro do body */
+    padding-top: 60px; /* Dá espaço para a navbar fixa */
+}
+
+/* Navegação */
+nav {
+    width: 100%;
+    background-color: #2d2d2d;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    position: fixed; /* Fixa a navbar no topo */
+    top: 0; /* Alinha a navbar no topo da tela */
+    left: 0;
+    z-index: 1000; /* Garante que a navbar fique acima do conteúdo */
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+}
+
+nav ul li {
+    margin: 0 25px;
+}
+
+nav ul li a {
+    color: #f39c12;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Conteúdo principal */
+div > h1 {
+    color: #f39c12;
+    font-size: 2rem;
+    margin-top: 30px;
+}
+
+div > p {
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
+
+/* Container principal */
+.container {
+    background-color: #2d2d2d; /* Fundo escuro para o container */
+    border-radius: 10px;
+    width: 100%;
+    max-width: 600px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Alinha os itens no centro */
+}
+
+.container > a {
+    background-color: #333;
+    color: #f1f1f1;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+    text-decoration: none;
+}
+
+.container > div:hover {
+    background-color: #f39c12;
+    color: #1c1c1c;
+}
+
+/* Responsividade */
+@media (max-width: 500px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    .container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+}
