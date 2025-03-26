@@ -58,12 +58,10 @@
                         <p><strong>Endereço:</strong> <span th:text="${store.address}"></span></p>
                         <p><strong>Descrição:</strong> <span th:text="${store.description}"></span></p>
             
-                        <!-- Botão Editar -->
                         <button type="button" class="edit-btn"
                             th:attr="data-id=${store.id}, data-name=${store.name}, data-address=${store.address}, data-description=${store.description}"
                             onclick="preencherFormulario(this)">Editar</button>
             
-                        <!-- Formulário de Exclusão -->
                         <form th:action="@{/store/{id}(id=${store.id})}" th:method="post">
                             <input type="hidden" name="_method" value="delete" />
                             <button type="submit" class="delete-btn"
