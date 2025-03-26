@@ -16,13 +16,13 @@
             <form method="post" th:action="@{/login}">
                 <label for="username">Email:</label>
                 <input type="text" id="login-email" name="username" placeholder="Insira seu email" required>
-
+            
                 <label for="password">Senha:</label>
                 <input type="password" id="login-password" name="password" placeholder="Insira sua senha" required>
-
+            
                 <button type="submit">Entrar</button>
                 <button type="reset">Limpar</button>
-            </form>
+            </form>            
             <hr>
             <div class="go-register">
                 <p>Não tem uma conta? <a href="javascript:void(0);" onclick="toggleForms()">Crie uma agora</a></p>
@@ -36,15 +36,13 @@
                 <input type="text" id="register-name" name="name" placeholder="Insira seu nome" required>
 
                 <label for="email">Email:</label>
-                <input type="email" id="register-email" name="email" placeholder="Insira seu email (email@gmail.com)"
-                    required>
+                <input type="email" id="register-email" name="email" placeholder="Insira seu email (email@gmail.com)" required>
 
                 <label for="password">Senha:</label>
                 <input type="password" id="register-password" name="password" placeholder="Insira sua senha" required>
 
                 <label for="passwordconfirm">Confirmar Senha:</label>
-                <input type="password" id="register-passwordconfirm" name="passwordconfirm"
-                    placeholder="Confirme a sua senha" required>
+                <input type="password" id="register-passwordconfirm" name="passwordconfirm" placeholder="Confirme a sua senha" required>
 
                 <button type="submit">Registrar</button>
             </form>
@@ -53,14 +51,8 @@
                 <p>Já tem uma conta? <a href="javascript:void(0);" onclick="toggleForms()">Retornar ao login</a></p>
             </div>
         </div>
-
-        <div id="error-popup" class="error-popup" style="display: none;">
-            <span id="error-message">Usuário ou senha incorretos!</span>
-            <button onclick="closePopup()">X</button>
-        </div>
-
     </div>
-
+    
     <script>
         function toggleForms() {
             const loginForm = document.getElementById('login-form');
@@ -68,30 +60,6 @@
             loginForm.style.display = (loginForm.style.display === 'none') ? 'block' : 'none';
             registerForm.style.display = (registerForm.style.display === 'none') ? 'block' : 'none';
         }
-
-        function showErrorPopup(message) {
-            const popup = document.getElementById('error-popup');
-            const messageSpan = document.getElementById('error-message');
-            messageSpan.innerText = message;
-            popup.style.display = 'flex';
-
-            // Fechar automaticamente após 5 segundos
-            setTimeout(() => {
-                popup.style.display = 'none';
-            }, 5000);
-        }
-
-        function closePopup() {
-            document.getElementById('error-popup').style.display = 'none';
-        }
-
-        // Capturar erro da URL
-        window.onload = function () {
-            const params = new URLSearchParams(window.location.search);
-            if (params.has('error')) {
-                showErrorPopup("Usuário ou senha incorretos!");
-            }
-        };
     </script>
 </body>
 
