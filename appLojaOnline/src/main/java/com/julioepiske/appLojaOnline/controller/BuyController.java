@@ -2,21 +2,18 @@ package com.julioepiske.appLojaOnline.controller;
 
 import java.util.List;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.julioepiske.appLojaOnline.model.Store;
 import com.julioepiske.appLojaOnline.model.User;
-import com.julioepiske.appLojaOnline.repository.UserRepository;
+import com.julioepiske.appLojaOnline.service.AuthService;
 import com.julioepiske.appLojaOnline.service.BuyService;
 import com.julioepiske.appLojaOnline.service.StoreService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @AllArgsConstructor
@@ -25,7 +22,7 @@ public class BuyController {
 
     private final BuyService buyService;
     private final StoreService storeService;
-    private final UserRepository userRepository;
+    private final AuthService authService;
 
     @GetMapping("/buy")
     public String getBuyPage(Model model) {
