@@ -32,7 +32,5 @@ public class Buy {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    private Double priceTotal;
-
     private LocalDateTime purchaseDate = LocalDateTime.now();
 }
