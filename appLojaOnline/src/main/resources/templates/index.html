@@ -51,6 +51,11 @@
                 <p>Já tem uma conta? <a href="javascript:void(0);" onclick="toggleForms()">Retornar ao login</a></p>
             </div>
         </div>
+
+        <div id="error-popup" class="error-popup" style="display: none;">
+            <span id="error-message">Usuário ou senha incorretos!</span>
+            <button onclick="closePopup()">X</button>
+        </div>
     </div>
     
     <script>
@@ -60,6 +65,30 @@
             loginForm.style.display = (loginForm.style.display === 'none') ? 'block' : 'none';
             registerForm.style.display = (registerForm.style.display === 'none') ? 'block' : 'none';
         }
+
+        function showErrorPopup(message) {
+            const popup = document.getElementById('error-popup');
+            const messageSpan = document.getElementById('error-message');
+            messageSpan.innerText = message;
+            popup.style.display = 'flex';
+
+            // Fechar automaticamente após 5 segundos
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 5000);
+        }
+
+        function closePopup() {
+            document.getElementById('error-popup').style.display = 'none';
+        }
+
+        // Capturar erro da URL
+        window.onload = function () {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('error')) {
+                showErrorPopup("Usuário ou senha incorretos!");
+            }
+        };
     </script>
 </body>
 
