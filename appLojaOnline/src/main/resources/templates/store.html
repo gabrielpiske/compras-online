@@ -44,15 +44,15 @@
                 </div>
 
                 <button type="submit" class="submit-btn" id="form-submit-btn">Cadastrar</button>
-                <button type="reset" class="reset-btn" id="form-reset-btn">Limpar</button>
+                <button type="reset" class="reset-btn" id="form-reset-btn" onclick="verifyEdit()">Limpar</button>
             </form>
         </div>
     </div>
 
     <div class="container-registered">
         <!-- Lista de lojas cadastradas -->
+        <h2>Lojas Cadastradas</h2>
         <div class="lojas-list">
-            <h3>Lojas Cadastradas</h3>
             <ul>
                 <li th:each="store : ${stores}">
                     <div class="loja-item">
@@ -102,6 +102,16 @@
 
             // Modifica a ação do formulário para enviar uma atualização
             document.getElementById("store-form").setAttribute("action", "/store/update");
+        }
+
+        function verifyEdit() {
+            let titulo = document.getElementById("form-title").innerText;
+
+            if (titulo === "Editar Loja") {
+                document.getElementById("form-title").innerText = "Cadastrar Loja";
+                document.getElementById("form-submit-btn").innerText = "Cadastrar";
+                document.getElementById("store-form").removeAttribute;
+            }
         }
     </script>
 
