@@ -2,6 +2,7 @@ package com.julioepiske.appLojaOnline.model;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,5 +33,6 @@ public class Buy {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
+    @Column(nullable = false)
     private LocalDateTime purchaseDate = LocalDateTime.now();
 }
