@@ -1,34 +1,34 @@
-/* Importação da fonte Montserrat */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
-/* Definições gerais */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif; /* Fonte Montserrat */
+    font-family: 'Montserrat', sans-serif;
 }
 
-/* Corpo do site */
 body {
-    background-color: #f4f4f9; /* Cor de fundo clara */
-    color: #333; /* Texto em cinza escuro */
-    font-size: 16px;
-    display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: flex-start; /* Alinha ao topo */
-    min-height: 100vh; /* Faz com que o body ocupe toda a altura da tela */
-    flex-direction: column; /* Empilha os itens verticalmente */
-    padding: 20px;
+    background-color: #1c1c1c;
+    color: #f1f1f1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    text-align: center;
+    padding-top: 60px;
 }
 
-/* Barra de navegação */
 nav {
     width: 100%;
-    background-color: #2d3436; /* Cor escura da navbar */
-    padding: 15px 0;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
+    background-color: #2d2d2d;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
 .nav-container {
@@ -58,33 +58,34 @@ nav ul li {
 nav ul li a {
     color: #f1f1f1;
     text-decoration: none;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.2rem;
 }
 
 nav ul li a:hover {
-    color: #f39c12;
+    text-decoration: underline;
 }
 
-/* Container principal */
-.container {
+.container-registered, .container-register {
     width: 100%;
     max-width: 900px;
-    background-color: #fff;
+    background-color: #2d2d2d;
     border-radius: 10px;
     padding: 30px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    margin-top: 30px;
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
-/* Formulário de cadastro */
+
 .form-container {
     margin-bottom: 40px;
 }
 
 .form-container h2 {
     font-size: 1.6rem;
-    color: #2d3436;
+    color: #f39c12;
     margin-bottom: 20px;
 }
 
@@ -95,18 +96,25 @@ nav ul li a:hover {
 }
 
 .form-group label {
-    font-size: 1.1rem;
-    color: #2d3436;
-    margin-bottom: 8px;
+    color: #f1f1f1;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: left;
 }
 
 .form-group input, .form-group textarea {
     padding: 12px;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid #444;
     border-radius: 8px;
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: #333;
+    color: #FFF;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #f39c12;
 }
 
 .form-group textarea {
@@ -114,7 +122,7 @@ nav ul li a:hover {
     min-height: 100px;
 }
 
-.submit-btn {
+.submit-btn, .reset-btn {
     padding: 12px 20px;
     font-size: 1.1rem;
     background-color: #f39c12;
@@ -127,14 +135,13 @@ nav ul li a:hover {
     margin-top: 20px;
 }
 
-.submit-btn:hover {
+.submit-btn:hover, .reset-btn:hover {
     background-color: #e67e22;
 }
 
-/* Lista de lojas */
 .lojas-list h3 {
     font-size: 1.5rem;
-    color: #2d3436;
+    color: #f39c12;
     margin-bottom: 20px;
 }
 
@@ -143,28 +150,72 @@ nav ul li a:hover {
 }
 
 .loja-item {
-    background-color: #f9f9f9;
+    background-color: #333;
     padding: 20px;
     margin-bottom: 15px;
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .loja-item h4 {
     font-size: 1.4rem;
-    color: #2d3436;
+    color: #f1f1f1;
+    text-align: left;
 }
 
 .loja-item p {
     font-size: 1rem;
     color: #555;
+    text-align: left;
 }
 
 .loja-item strong {
     color: #f39c12;
 }
 
-/* Responsividade */
+.loja-item span {
+    color: #F1F1F1;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items:end;
+    gap: 10px;
+}
+
+.actions .edit-btn,
+.actions .delete-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    width: 200px;
+    text-align: center;
+}
+
+.actions .edit-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.actions .delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.actions .edit-btn:hover,
+.actions .delete-btn:hover {
+    opacity: 0.8;
+}
+
+.actions .delete-btn:active {
+    background-color: #d32f2f;
+}
+
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
@@ -185,7 +236,7 @@ nav ul li a:hover {
         margin: 5px 0;
     }
 
-    .container {
+    .container-registered, .container-register {
         width: 100%;
         padding: 20px;
     }
