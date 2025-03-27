@@ -29,10 +29,7 @@ public class BuyController {
 
     @GetMapping("/buy")
     public String getBuyPage(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userEmail = authentication.getName();
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        User user = authService.getAuthenticatedUser();
 
         List<Store> stores = storeService.findAll();
 
@@ -48,5 +45,5 @@ public class BuyController {
 
         return "redirect:/buy";
     }
-
+    
 }
