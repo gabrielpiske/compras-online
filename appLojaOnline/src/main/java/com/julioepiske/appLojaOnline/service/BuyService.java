@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-
 import com.julioepiske.appLojaOnline.model.Buy;
 import com.julioepiske.appLojaOnline.model.Store;
 import com.julioepiske.appLojaOnline.model.User;
@@ -22,18 +21,18 @@ public class BuyService {
     private final AuthService authService;
     private final StoreRepository storeRepository;
 
-    public void createPurchase(List<Long> storeIds){
+    public void createPurchase(Long storeId) {
         User user = authService.getAuthenticatedUser();
 
-        List<Store> stores = storeRepository.findAllById(storeIds);
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new RuntimeException("Loja não encontrada"));
 
-        //cria compras para as lojas selecionadas
-        for(Store store : stores){
-            Buy buy = new Buy();
-            buy.setUser(user);
-            buy.setStore(store);
-            buy.setPurchaseDate(LocalDateTime.now());
-            buyRepository.save(buy);
-        }
+        // cria compras para as lojas selecionadas
+        Buy buy = new Buy();
+        buy.setUser(user);
+        buy.setStore(store);
+        buy.setPurchaseDate(LocalDateTime.now());
+        
+        buyRepository.save(buy);
     }
 }
