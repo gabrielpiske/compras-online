@@ -24,6 +24,10 @@ public class BuyService {
     public void createPurchase(Long storeId) {
         User user = authService.getAuthenticatedUser();
 
+        if (user == null) {
+            throw new RuntimeException("Usuário não autenticado");
+        }
+
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new RuntimeException("Loja não encontrada"));
 

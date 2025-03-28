@@ -36,7 +36,7 @@ public class BuyController {
     }
 
     @PostMapping("/buy")
-    public String createPurchase(@RequestParam Long storeId) {
+    public String createPurchase(@RequestParam(name = "storeId", required = true) Long storeId) {
         // TODO: process POST request
         buyService.createPurchase(storeId);
 
