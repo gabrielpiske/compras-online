@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #1c1c1c;
+    color: #f1f1f1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    text-align: center;
+    padding-top: 60px;
+}
+
+nav {
+    width: 100%;
+    background-color: #2d2d2d;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+nav h1 {
+    color: #f39c12;
+    font-size: 1.8rem;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #f1f1f1;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+h2 {
+    font-size: 1.6rem;
+    color: #f39c12;
+    margin-bottom: 30px;
+}
+
+.container-register, .container-store {
+    width: 100%;
+    max-width: 900px;
+    background-color: #2d2d2d;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 605px;
+}
+
+.container-register {
+    justify-content: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    color: #f1f1f1;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.form-group input {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background-color: #333;
+    color: #FFF;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #f39c12;
+}
+
+.submit-btn, .reset-btn {
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    background-color: #f39c12;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.submit-btn:hover, .reset-btn:hover {
+    background-color: #e67e22;
+}
+
+.lojas-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 452px;
+    padding: 15px;
+    padding-bottom: 5px;
+    background-color: #222;
+    border-radius: 10px;
+}
+
+.loja-item h4,
+.loja-item p {
+    color: #f1f1f1;
+}
+
+.loja-item h4 {
+    font-size: 1.4rem;
+    text-align: left;
+}
+
+.loja-item {
+    background-color: #333;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    overflow: hidden;
+    align-items: center;
+}
+
+.lojas-list ul {
+    list-style-type: none;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items:end;
+    gap: 10px;
+}
+
+.actions .add-btn {
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 35px;
+    text-align: center;
+}
+
+.actions .add-btn{
+    background-color: #4C75CA;
+    color: white;
+}
+
+.actions .add-btn:hover {
+    opacity: 0.8;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #f39c12;
+    border-radius: 10px;
+    border: 3px solid #1c1c1c;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #e67e22;
+}
+
+::-webkit-scrollbar-horizontal {
+    height: 10px;
+}
+
+::-webkit-scrollbar-vertical {
+    width: 10px;
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav h1 {
+        font-size: 1.5rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 15px;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    .container-register {
+        width: 100%;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    .form-group input {
+        font-size: 1rem;
+    }
+}

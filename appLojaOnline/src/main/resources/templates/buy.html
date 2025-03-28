@@ -1,11 +1,104 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Gerenciar - Compras</title>
+    <link rel="stylesheet" th:href="@{/css/buy.css}">
 </head>
 <body>
+    <nav>
+        <div class="nav-container">
+            <h1>Gerenciar Compras</h1>
+            <ul>
+                <li><a th:href="@{/home}">Home</a></li>
+                <li><a th:href="@{/store}">Lojas</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-register">
+        <div class="form-container">
+            <h2 id="form-title">Cadastrar Compra</h2>
+            <form th:action="@{/buy}" method="post" id="buy-form">
+                <div class="form-group">
+                    <label for="user">Usuário:</label>
+                    <input type="text" id="user" name="user" required disabled th:value="${user.name}">
+                </div>
+
+                <div class="form-group">
+                    <label for="loja">Loja:</label>
+                    <input type="text" id="loja" name="loja" required disabled placeholder="Seleciona a loja da compra">
+                </div>
+
+                <div class="form-group">
+                    <label for="data">Data:</label>
+                    <input type="text" id="data" name="data" required disabled placeholder="Data da compra">
+                </div>
+
+                <input type="hidden" id="storeId" class="storeId">
+
+                <button type="submit" class="submit-btn" id="form-submit-btn">Confirmar</button>
+                <button type="reset" class="reset-btn" id="form-reset-btn">Limpar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container-store">
+        <h2>Lojas Cadastradas</h2>
+        <div class="lojas-list">
+            <ul>
+                <li th:each="store : ${stores}">
+                    <div class="loja-item">
+                        <div class="content">
+                            <h4 th:text="${store.name}"></h4>
+                            <p th:text="${store.id}" hidden></p>
+                        </div>
+                        <div class="actions">
+                            <button type="button" class="add-btn"
+                                th:attr="data-loja=${store.name}, data-id=${store.id}"
+                                onclick="preencherFormulario(this)">+</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
     
+    <script>
+        function preencherFormulario(button) {
+            const lojaName = button.getAttribute('data-loja');
+            const lojaId = button.getAttribute('data-id');
+            
+            document.getElementById('loja').value = lojaName;
+
+            document.getElementById('storeId').value = lojaId;
+        }
+
+        function atualizarDataHora() {
+            const now = new Date();
+            
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+                timeZone: 'America/Sao_Paulo'
+            };
+
+            // Formata a data e hora no formato 'YYYY-MM-DD HH:mm:ss'
+            const dataHoraFormatada = new Intl.DateTimeFormat('pt-BR', options).format(now);
+
+            document.getElementById('data').value = dataHoraFormatada;
+        }
+        
+        setInterval(atualizarDataHora, 1000);
+
+        atualizarDataHora();
+    </script>
 </body>
 </html>
