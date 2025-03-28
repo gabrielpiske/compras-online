@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.julioepiske.appLojaOnline.model.Store;
 import com.julioepiske.appLojaOnline.model.User;
@@ -41,6 +43,12 @@ public class BuyController {
         buyService.createPurchase(storeId);
 
         return "redirect:/buy";
+    }
+
+    @DeleteMapping("/buy/{id}")
+    public String deleteBuy(@PathVariable Long id) {
+        buyService.deletePurchase(id);
+        return "redirect:/store";
     }
     
 }

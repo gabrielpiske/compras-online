@@ -3,6 +3,7 @@ package com.julioepiske.appLojaOnline.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration;
 import org.springframework.stereotype.Service;
 
 import com.julioepiske.appLojaOnline.model.Buy;
@@ -38,5 +39,33 @@ public class BuyService {
         buy.setPurchaseDate(LocalDateTime.now());
         
         buyRepository.save(buy);
+    }
+
+    public List<Buy> getAllPurchases(){
+        return buyRepository.findAll();
+    }
+
+    public Buy getPurchaseById(Long id){
+        return buyRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Compra não encontrada"));
+    }
+
+    public Buy updatePurchase(Long id, Long storeId){
+        Buy existingBuy = buyRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Compra não encontrada"));
+
+        Store store = storeRepository.findById(storeId)
+            .orElseThrow(() -> new RuntimeException("Loja não encontrada"));
+        
+        existingBuy.setStore(store);
+        existingBuy.setPurchaseDate(LocalDateTime.now());
+
+        return buyRepository.save(existingBuy);
+    }
+
+    public void deletePurchase(Long id){
+        Buy buy = buyRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Compra não encontrada"));
+        buyRepository.delete(buy);
     }
 }
