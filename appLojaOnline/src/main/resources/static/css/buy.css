@@ -29,6 +29,9 @@ nav {
     top: 0;
     left: 0;
     z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .nav-container {
@@ -36,9 +39,6 @@ nav {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
 }
 
 nav h1 {
@@ -49,6 +49,7 @@ nav h1 {
 nav ul {
     list-style-type: none;
     display: flex;
+    padding: 0;
 }
 
 nav ul li {
@@ -63,6 +64,13 @@ nav ul li a {
 
 nav ul li a:hover {
     text-decoration: underline;
+}
+
+.user img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 110px;
 }
 
 h2 {

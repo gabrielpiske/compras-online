@@ -10,10 +10,17 @@
 <body>
     <nav>
         <div class="nav-container">
-            <h1>Gerenciar Compras</h1>
-            <ul>
+            <ul class="ul-a">
                 <li><a th:href="@{/home}">Home</a></li>
                 <li><a th:href="@{/store}">Lojas</a></li>
+            </ul>
+            <h1>Gerenciar Compras</h1>
+            <ul class="ul-b">
+                <li class="user">
+                    <a th:href="@{/user}">
+                        <img src="/images/user.png" alt="Imagem do usuário" />
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
