@@ -3,7 +3,6 @@ package com.julioepiske.appLojaOnline.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration;
 import org.springframework.stereotype.Service;
 
 import com.julioepiske.appLojaOnline.model.Buy;
