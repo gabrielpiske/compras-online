@@ -29,9 +29,10 @@ public class UserController {
 
     @GetMapping("/user")
     public String getUserPage(Model model) {
-        // User user = authService.getAuthenticatedUser();
+        User user = authService.getAuthenticatedUser();
         List<User> users = userService.listAll();
         model.addAttribute("users", users);
+        model.addAttribute("user", user);
 
         return "user";
     }
@@ -78,7 +79,8 @@ public class UserController {
             userService.deleteById(id);
         } catch (Exception e) {
             // TODO: handle exception
-            model.addAttribute("errror", "Não é possível excluir o usuário, pois ele está associado a outros registros.");
+            model.addAttribute("errror",
+                    "Não é possível excluir o usuário, pois ele está associado a outros registros.");
         }
         return "redirect:/user";
     }

@@ -5,8 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuário</title>
+    <link rel="stylesheet" th:href="@{/css/user.css}">
 </head>
 <body>
-    
+    <div class="container">
+        <div class="user">
+            <img src="/images/user.png" alt="Imagem do usuário" />
+            <span th:text="${user.name}"></span>
+        </div>
+
+        <div class="infos">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" th:value="${user.email}">
+            <label for="senha">Senha:</label>
+            <input type="password" name="password" id="password" th:value="${user.password}">
+        </div>
+    </div>
 </body>
 </html>
