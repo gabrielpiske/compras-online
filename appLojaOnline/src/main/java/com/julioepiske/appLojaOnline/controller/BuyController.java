@@ -45,6 +45,12 @@ public class BuyController {
         return "redirect:/buy";
     }
 
+    @PostMapping("/buy/update/")
+    public String updatePurchase(@RequestParam Long buyId, @RequestParam Long storeId){
+        buyService.updatePurchase(buyId, storeId);
+        return "redirect:/buy";
+    }
+
     @DeleteMapping("/buy/{id}")
     public String deleteBuy(@PathVariable Long id) {
         buyService.deletePurchase(id);
