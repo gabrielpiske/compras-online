@@ -28,11 +28,43 @@ body {
     margin: 30px auto;
     display: flex;
     flex-direction: column;
-    min-height: 605px;
 }
 
 img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.infos label {
+    margin-bottom: 5px; /* Espaçamento entre os itens */
+}
+
+.delete {
+    color: red;
+}
+
+.back {
+    font-size:  20px;
+}
+
+input[type="text"], input[type="password"], input[type="email"], button {
+    padding: 12px;
+    margin-bottom: 15px;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 5px;
+    color: #f1f1f1;
+    font-size: 1rem;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, button:hover {
+    outline: none;
+    border-color: #f39c12;
 }

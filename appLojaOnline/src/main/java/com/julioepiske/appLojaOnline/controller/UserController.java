@@ -78,8 +78,7 @@ public class UserController {
         try {
             userService.deleteById(id);
         } catch (Exception e) {
-            // TODO: handle exception
-            model.addAttribute("errror",
+            model.addAttribute("error",
                     "Não é possível excluir o usuário, pois ele está associado a outros registros.");
         }
         return "redirect:/user";

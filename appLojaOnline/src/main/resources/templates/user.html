@@ -7,19 +7,48 @@
     <title>Usuário</title>
     <link rel="stylesheet" th:href="@{/css/user.css}">
 </head>
+
 <body>
     <div class="container">
+        <a class="back" href="">&#8592;</a>
         <div class="user">
             <img src="/images/user.png" alt="Imagem do usuário" />
-            <span th:text="${user.name}"></span>
+            <p>Olá, <span id="firstName"></span></p>
         </div>
 
         <div class="infos">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" th:value="${user.name}" disabled>
             <label for="email">Email:</label>
-            <input type="email" name="email" id="email" th:value="${user.email}">
-            <label for="senha">Senha:</label>
-            <input type="password" name="password" id="password" th:value="${user.password}">
+            <input type="email" id="email" th:value="${user.email}" disabled>
+            <label>Nova senha:</label>
+            <button class="newPass">Definir nova senha</button>
+        </div>
+
+        <div class="actions">
+            <p>Deseja excluir sua conta? <a class="delete" onclick="return confirm('Deseja excluir sua Conta?')" th:href="@{/user/delete/{id}(id=${user.id})}">Clique aqui</a></p>
         </div>
     </div>
+
+    <script>
+        function getFirstName() {
+            var fullName = document.getElementById("name").value;
+
+            var nameParts = fullName.split(' ');
+
+            if (nameParts.length > 1) {
+                return nameParts[0];
+            } else {
+                return nameParts[0];
+            }
+        }
+
+        window.onload = function() {
+            var firstName = getFirstName();
+            document.getElementById("firstName").innerText = firstName;
+        };
+    </script>
+
 </body>
+
 </html>
