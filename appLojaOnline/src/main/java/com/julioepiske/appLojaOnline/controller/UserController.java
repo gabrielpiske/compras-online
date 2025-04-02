@@ -1,8 +1,12 @@
 package com.julioepiske.appLojaOnline.controller;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.julioepiske.appLojaOnline.model.User;
 import com.julioepiske.appLojaOnline.service.AuthService;
@@ -56,21 +61,53 @@ public class UserController {
         return "redirect:/login";
     }
 
+    /*
+     * @PostMapping("/user/edit/{id}")
+     * public String updateUser(@PathVariable Long
+     * id, @Validated @ModelAttribute("user") User user,
+     * BindingResult result, Model model) {
+     * // TODO: process POST request
+     * if (result.hasErrors()) {
+     * return "user";
+     * }
+     * Optional<User> existingUser = userService.findByEmail(user.getEmail());
+     * if (existingUser.isPresent() && !existingUser.get().getId().equals(id)) {
+     * model.addAttribute("error", "Email ja cadastrado");
+     * return "user";
+     * }
+     * user.setId(id);
+     * userService.save(user);
+     * return "redirect:/user";
+     * }
+     */
+
     @PostMapping("/user/edit/{id}")
-    public String updateUser(@PathVariable Long id, @Validated @ModelAttribute("user") User user,
-            BindingResult result, Model model) {
-        // TODO: process POST request
-        if (result.hasErrors()) {
-            return "user";
+    public ResponseEntity<Map<String, String>> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+        try {
+            User user = userService.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+            Map<String, String> response = new HashMap<>();
+
+            if (updatedUser.getName() != null) {
+                user.setName(updatedUser.getName());
+            }
+
+            boolean emailUpdated = false;
+            if (updatedUser.getEmail() != null && !updatedUser.getEmail().equals(user.getEmail())) {
+                user.setEmail(updatedUser.getEmail());
+                emailUpdated = true;
+            }
+
+            userService.save(user);
+
+            response.put("message", "Dados atualizados com sucesso!");
+            response.put("redirect", emailUpdated ? "/login" : "");
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Collections.singletonMap("error", "Erro ao atualizar usuário"));
         }
-        Optional<User> existingUser = userService.findByEmail(user.getEmail());
-        if (existingUser.isPresent() && !existingUser.get().getId().equals(id)) {
-            model.addAttribute("error", "Email ja cadastrado");
-            return "user";
-        }
-        user.setId(id);
-        userService.save(user);
-        return "redirect:/user";
     }
 
     @DeleteMapping("/user/delete/{id}")

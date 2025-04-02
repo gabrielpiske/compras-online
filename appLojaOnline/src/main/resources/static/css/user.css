@@ -97,8 +97,11 @@ button:hover {
     right: 10px;
     top: 53%;
     transform: translateY(-50%);
-    color: gray;
+    color: #9c9c9c;
     font-size: 16px;
-    pointer-events: none;
     text-justify: center;
+}
+
+.icon:hover {
+    opacity: 70%;
 }

@@ -28,8 +28,8 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public User findById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
     }
 
     public Optional<User> findByEmail(String email) {
