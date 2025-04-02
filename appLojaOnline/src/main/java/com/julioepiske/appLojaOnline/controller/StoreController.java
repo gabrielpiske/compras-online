@@ -36,8 +36,13 @@ public class StoreController {
     }
 
     @DeleteMapping("/store/{id}")
-    public String deleteStore(@PathVariable Long id) {
-        storeService.deleteById(id);
+    public String deleteStore(@PathVariable Long id, Model model) {
+        try{
+            storeService.deleteById(id);
+        } catch(Exception e){
+            model.addAttribute("error","Não é possivel excluir a loja, pois esta associada a outros registros.");
+        }
+        
         return "redirect:/store";
     }
 

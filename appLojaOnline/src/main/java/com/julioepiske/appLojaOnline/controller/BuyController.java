@@ -39,7 +39,6 @@ public class BuyController {
 
     @PostMapping("/buy")
     public String createPurchase(@RequestParam(name = "storeId", required = true) Long storeId) {
-        // TODO: process POST request
         buyService.createPurchase(storeId);
 
         return "redirect:/buy";
