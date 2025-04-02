@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.julioepiske.appLojaOnline.model.Buy;
 import com.julioepiske.appLojaOnline.model.Store;
 import com.julioepiske.appLojaOnline.model.User;
 import com.julioepiske.appLojaOnline.service.AuthService;
@@ -31,9 +32,15 @@ public class BuyController {
         User user = authService.getAuthenticatedUser();
 
         List<Store> stores = storeService.findAll();
+        List<Buy> buys = buyService.getPurchasesByUser(user);
+
+        //logs
+        System.out.println("Usuário autenticado: " + user.getName());
+        System.out.println("Compras encontradas: " + buys.size());
 
         model.addAttribute("stores", stores);
         model.addAttribute("user", user);
+        model.addAttribute("buys", buys);
         return "buy";
     }
 
@@ -45,7 +52,7 @@ public class BuyController {
     }
 
     @PostMapping("/buy/update/")
-    public String updatePurchase(@RequestParam Long buyId, @RequestParam Long storeId){
+    public String updatePurchase(@RequestParam Long buyId, @RequestParam Long storeId) {
         buyService.updatePurchase(buyId, storeId);
         return "redirect:/buy";
     }
@@ -55,5 +62,5 @@ public class BuyController {
         buyService.deletePurchase(id);
         return "redirect:/store";
     }
-    
+
 }

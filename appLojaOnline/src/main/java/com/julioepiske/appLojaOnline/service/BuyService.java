@@ -67,4 +67,8 @@ public class BuyService {
             .orElseThrow(() -> new RuntimeException("Compra não encontrada"));
         buyRepository.delete(buy);
     }
+
+    public List<Buy> getPurchasesByUser(User user) {
+        return buyRepository.findByUserWithDetails(user);
+    }
 }
