@@ -81,6 +81,6 @@ public class UserController {
             model.addAttribute("error",
                     "Não é possível excluir o usuário, pois ele está associado a outros registros.");
         }
-        return "redirect:/user";
+        return "redirect:/login";
     }
 }
