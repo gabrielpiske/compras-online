@@ -97,6 +97,12 @@ public class UserController {
                 emailUpdated = true;
             }
 
+            if (updatedUser.getPassword() != null && !updatedUser.getPassword().isBlank()) {
+                if (!updatedUser.getPassword().equals(user.getPassword())) { // Verifica se a senha já está encriptada
+                    user.setPassword(updatedUser.getPassword()); // Mantém a senha inalterada
+                }
+            }
+
             userService.save(user);
 
             response.put("message", "Dados atualizados com sucesso!");

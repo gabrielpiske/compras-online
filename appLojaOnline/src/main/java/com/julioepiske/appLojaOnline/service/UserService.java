@@ -24,7 +24,9 @@ public class UserService implements UserDetailsService {
     }
 
     public User save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getId() == null) { // Apenas encripta se for um novo usuário
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         return userRepository.save(user);
     }
 
