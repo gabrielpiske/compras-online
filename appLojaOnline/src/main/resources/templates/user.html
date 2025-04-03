@@ -1,169 +1,172 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Usuário</title>
-    <link rel="stylesheet" th:href="@{/css/user.css}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
+    <link rel="stylesheet" th:href="@{/css/user.css}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <div class="back">
-            <a class="back" onclick="voltar()">➜</a>
-        </div>
-        <div class="user">
-            <img src="/images/user.png" alt="Imagem do usuário" />
-            <p>Olá, <span id="firstName"></span></p>
-        </div>
+      <div class="back">
+        <a class="back" onclick="voltar()">➜</a>
+      </div>
+      <div class="user">
+        <img src="/images/user.png" alt="Imagem do usuário" />
+        <p>Olá, <span id="firstName"></span></p>
+      </div>
 
-        <div class="infos">
-            <input type="hidden" id="userId" th:value="${user.id}">
+      <div class="infos">
+        <input type="hidden" id="userId" th:value="${user.id}" />
 
-            <div class="input-container" data-field="name">
-                <label for="name">Nome:</label>
-                <input type="text" id="name" th:value="${user.name}" disabled>
-                <i class="icon fa fa-pencil"></i>
-            </div>
-            <div class="input-container" data-field="email">
-                <label for="email">Email:</label>
-                <input type="email" id="email" th:value="${user.email}" disabled>
-                <i class="icon fa fa-pencil"></i>
-            </div>
-            <div class="input-container">
-                <label>Nova senha:</label>
-                <button class="newPass">Definir nova senha</button>
-            </div>
+        <div class="input-container" data-field="name">
+          <label for="name">Nome:</label>
+          <input type="text" id="name" th:value="${user.name}" disabled />
+          <i class="icon fa fa-pencil"></i>
         </div>
+        <div class="input-container" data-field="email">
+          <label for="email">Email:</label>
+          <input type="email" id="email" th:value="${user.email}" disabled />
+          <i class="icon fa fa-pencil"></i>
+        </div>
+        <div class="input-container">
+          <label>Nova senha:</label>
+          <button class="newPass">Definir nova senha</button>
+        </div>
+      </div>
 
-        <div class="actions">
-            <p>Deseja excluir sua conta?
-                <a href="#" class="delete" onclick="return confirmDelete();">Clique aqui</a>
-            </p>
-            <form id="deleteForm" th:action="@{/user/delete/{id}(id=${user.id})}" method="post">
-                <input type="hidden" name="_method" value="DELETE">
-            </form>
-        </div>
+      <div class="actions">
+        <p>
+          Deseja excluir sua conta?
+          <a href="#" class="delete" onclick="return confirmDelete();"
+            >Clique aqui</a
+          >
+        </p>
+        <form
+          id="deleteForm"
+          th:action="@{/user/delete/{id}(id=${user.id})}"
+          method="post"
+        >
+          <input type="hidden" name="_method" value="DELETE" />
+        </form>
+      </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const nameInput = document.getElementById("name");
-            const firstName = document.getElementById("firstName");
+      document.addEventListener("DOMContentLoaded", () => {
+        const nameInput = document.getElementById("name");
+        const firstName = document.getElementById("firstName");
 
-            if (nameInput && firstName) {
-                firstName.innerText = nameInput.value.split(' ')[0] || "";
-            }
-
-            // Alternar edição dos inputs e salvar no backend
-            document.querySelectorAll(".icon").forEach(icon => {
-                icon.addEventListener("click", async () => {
-                    const container = icon.closest(".input-container");
-                    const input = container.querySelector("input");
-                    const field = container.dataset.field;
-                    const userId = document.getElementById("userId")?.value;
-
-                    if (input.hasAttribute("disabled")) {
-                        input.removeAttribute("disabled");
-                        input.focus();
-                        icon.classList.replace("fa-pencil", "fa-check");
-                        icon.style.color = "#28a745";
-                    } else {
-                        input.setAttribute("disabled", true);
-                        icon.classList.replace("fa-check", "fa-pencil");
-                        icon.style.color = "#9c9c9c";
-
-                        try {
-                            const response = await fetch(`/user/edit/${userId}`, {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ [field]: input.value })
-                            });
-
-                            if (!response.ok) {
-                                throw new Error("Erro ao salvar alterações!");
-                            }
-
-                            console.log("Alteração salva com sucesso!");
-
-                            if (data.redirect) {
-                                alert("Seu e-mail foi alterado! Faça login novamente.");
-                                window.location.href = data.redirect;
-                            }
-
-                        } catch (error) {
-                            alert("Erro ao salvar alterações!");
-                            console.error(error);
-                        }
-                    }
-                });
-            });
-
-            // Fechar edição ao clicar fora sem reverter edições antes do envio
-            document.addEventListener("click", (event) => {
-                document.querySelectorAll(".input-container").forEach(container => {
-                    const input = container.querySelector("input");
-                    const icon = container.querySelector(".icon");
-
-                    if (input && icon) { // ✅ Evita erro se input for null
-                        if (!container.contains(event.target)) {
-                            input.setAttribute("disabled", true);
-                            icon.classList.replace("fa-check", "fa-pencil");
-                            icon.style.color = "#9c9c9c";
-                        }
-                    }
-                });
-            });
-        });
-
-        document.addEventListener("DOMContentLoaded", () => {
-            document.querySelector(".newPass").addEventListener("click", async () => {
-                const userId = document.getElementById("userId").value;
-                const newPassword = prompt("Digite sua nova senha:");
-
-                if (!newPassword || newPassword.trim() === "") {
-                    alert("A senha não pode estar vazia!");
-                    return;
-                }
-
-                try {
-                    const response = await fetch(`/user/update-password/${userId}`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ password: newPassword })
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        alert(data.message);
-                        if (data.redirect) {
-                            window.location.href = data.redirect; // Redireciona para o login
-                        }
-                    } else {
-                        alert(data.error || "Erro ao alterar a senha.");
-                    }
-                } catch (error) {
-                    alert("Erro ao processar a requisição.");
-                    console.error(error);
-                }
-            });
-        });
-
-
-        function voltar() {
-            window.history.back();
+        if (nameInput && firstName) {
+          firstName.innerText = nameInput.value.split(" ")[0] || "";
         }
 
-        function confirmDelete() {
-            if (confirm('Deseja excluir sua Conta?')) {
-                document.getElementById('deleteForm').submit();
+        document.querySelectorAll(".icon").forEach((icon) => {
+          icon.addEventListener("click", async () => {
+            const container = icon.closest(".input-container");
+            const input = container.querySelector("input");
+            const field = container.dataset.field;
+            const userId = document.getElementById("userId")?.value;
+
+            if (input.hasAttribute("disabled")) {
+              input.removeAttribute("disabled");
+              input.focus();
+              icon.classList.replace("fa-pencil", "fa-check");
+              icon.style.color = "#28a745";
+            } else {
+              input.setAttribute("disabled", true);
+              icon.classList.replace("fa-check", "fa-pencil");
+              icon.style.color = "#9c9c9c";
+
+              try {
+                const response = await fetch(`/user/edit/${userId}`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ [field]: input.value }),
+                });
+
+                const data = await response.json();
+
+                console.log("Alteração salva com sucesso!");
+
+                if (data.redirect) {
+                  alert("Seu e-mail foi alterado! Faça login novamente.");
+                  window.location.href = data.redirect;
+                }
+              } catch (error) {
+                console.error(error);
+              }
             }
-            return false;
+          });
+        });
+
+        document.addEventListener("click", (event) => {
+          document.querySelectorAll(".input-container").forEach((container) => {
+            const input = container.querySelector("input");
+            const icon = container.querySelector(".icon");
+
+            if (input && icon) {
+              if (!container.contains(event.target)) {
+                input.setAttribute("disabled", true);
+                icon.classList.replace("fa-check", "fa-pencil");
+                icon.style.color = "#9c9c9c";
+              }
+            }
+          });
+        });
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document
+          .querySelector(".newPass")
+          .addEventListener("click", async () => {
+            const userId = document.getElementById("userId").value;
+            const newPassword = prompt("Digite sua nova senha:");
+
+            if (!newPassword || newPassword.trim() === "") {
+              alert("A senha não pode estar vazia!");
+              return;
+            }
+
+            try {
+              const response = await fetch(`/user/update-password/${userId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ password: newPassword }),
+              });
+
+              const data = await response.json();
+
+              if (response.ok) {
+                alert(data.message);
+                if (data.redirect) {
+                  window.location.href = data.redirect;
+                }
+              } else {
+                alert(data.error || "Erro ao alterar a senha.");
+              }
+            } catch (error) {
+              alert("Erro ao processar a requisição.");
+              console.error(error);
+            }
+          });
+      });
+
+      function voltar() {
+        window.history.back();
+      }
+
+      function confirmDelete() {
+        if (confirm("Deseja excluir sua Conta?")) {
+          document.getElementById("deleteForm").submit();
         }
+        return false;
+      }
     </script>
-</body>
-
+  </body>
 </html>

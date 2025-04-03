@@ -61,26 +61,6 @@ public class UserController {
         return "redirect:/login";
     }
 
-    /*
-     * @PostMapping("/user/edit/{id}")
-     * public String updateUser(@PathVariable Long
-     * id, @Validated @ModelAttribute("user") User user,
-     * BindingResult result, Model model) {
-     * // TODO: process POST request
-     * if (result.hasErrors()) {
-     * return "user";
-     * }
-     * Optional<User> existingUser = userService.findByEmail(user.getEmail());
-     * if (existingUser.isPresent() && !existingUser.get().getId().equals(id)) {
-     * model.addAttribute("error", "Email ja cadastrado");
-     * return "user";
-     * }
-     * user.setId(id);
-     * userService.save(user);
-     * return "redirect:/user";
-     * }
-     */
-
     @PostMapping("/user/edit/{id}")
     public ResponseEntity<Map<String, String>> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
         try {
@@ -135,8 +115,6 @@ public class UserController {
                     .body(Collections.singletonMap("error", "Erro ao atualizar senha"));
         }
     }
-
-
 
     @DeleteMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable Long id, Model model) {
