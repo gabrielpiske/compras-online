@@ -116,6 +116,28 @@ public class UserController {
         }
     }
 
+    @PostMapping("/user/update-password/{id}")
+    public ResponseEntity<Map<String, String>> updatePassword(@PathVariable Long id, @RequestBody User updatedUser) {
+        try {
+            User user = userService.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+            if (updatedUser.getPassword() != null && !updatedUser.getPassword().isBlank()) {
+                userService.updatePassword(user, updatedUser.getPassword());
+            }
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Senha alterada com sucesso!");
+            response.put("redirect", "/login"); // Adiciona o redirecionamento
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Collections.singletonMap("error", "Erro ao atualizar senha"));
+        }
+    }
+
+
+
     @DeleteMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable Long id, Model model) {
         try {

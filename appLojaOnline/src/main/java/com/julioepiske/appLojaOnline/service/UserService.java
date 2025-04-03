@@ -30,6 +30,11 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    public void updatePassword(User user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }    
+
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }

@@ -53,7 +53,7 @@
             const nameInput = document.getElementById("name");
             const firstName = document.getElementById("firstName");
 
-            if (nameInput && firstName) { 
+            if (nameInput && firstName) {
                 firstName.innerText = nameInput.value.split(' ')[0] || "";
             }
 
@@ -92,7 +92,7 @@
                                 alert("Seu e-mail foi alterado! Faça login novamente.");
                                 window.location.href = data.redirect;
                             }
-                            
+
                         } catch (error) {
                             alert("Erro ao salvar alterações!");
                             console.error(error);
@@ -115,6 +115,40 @@
                         }
                     }
                 });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector(".newPass").addEventListener("click", async () => {
+                const userId = document.getElementById("userId").value;
+                const newPassword = prompt("Digite sua nova senha:");
+
+                if (!newPassword || newPassword.trim() === "") {
+                    alert("A senha não pode estar vazia!");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/user/update-password/${userId}`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ password: newPassword })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        alert(data.message);
+                        if (data.redirect) {
+                            window.location.href = data.redirect; // Redireciona para o login
+                        }
+                    } else {
+                        alert(data.error || "Erro ao alterar a senha.");
+                    }
+                } catch (error) {
+                    alert("Erro ao processar a requisição.");
+                    console.error(error);
+                }
             });
         });
 
