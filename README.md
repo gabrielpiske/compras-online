@@ -31,6 +31,7 @@ src/
 │   ├── java/
 │   │   └── com/
 │   │       └── webstore/
+│   │           ├── config/      # Classes de configuração do Spring Security
 │   │           ├── controller/  # Controladores MVC
 │   │           ├── model/       # Classes modelo (Usuário, Loja, Compra)
 │   │           ├── repository/  # Repositórios para acesso ao banco
@@ -51,7 +52,7 @@ src/
 
 - Java 17 ou superior.
 - MySQL ou outro banco de dados relacional.
-- Maven ou Gradle para gerenciamento de dependências.
+- Maven para gerenciamento de dependências.
 
 ### Passos para rodar o projeto:
 
