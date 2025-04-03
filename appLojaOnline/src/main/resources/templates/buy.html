@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gerenciar - Compras</title>
-    <link rel="stylesheet" th:href="@{/css/buy.css}">
+    <link rel="stylesheet" th:href="@{/css/buy.css}" />
 </head>
 
 <body>
@@ -30,9 +30,11 @@
         <div class="form-container">
             <h2 id="form-title">Cadastrar Compra</h2>
             <form th:action="@{/buy}" method="post" id="buy-form">
+                <input type="hidden" id="buy-id" name="buyId" />
+
                 <div class="form-group">
                     <label for="user">Usuário:</label>
-                    <input type="text" id="user" name="user" required disabled th:value="${user.name}">
+                    <input type="text" id="user" name="user" required disabled th:value="${user.name}" />
                 </div>
 
                 <div class="form-group">
@@ -45,13 +47,17 @@
 
                 <div class="form-group">
                     <label for="data">Data:</label>
-                    <input type="text" id="data" name="data" required disabled placeholder="Data da compra">
+                    <input type="text" id="data" name="data" required disabled placeholder="Data da compra" />
                 </div>
 
-                <input type="hidden" id="storeId" class="storeId" name="storeId">
+                <input type="hidden" id="storeId" class="storeId" name="storeId" />
 
-                <button type="submit" class="submit-btn" id="form-submit-btn">Confirmar</button>
-                <button type="reset" class="reset-btn" id="form-reset-btn">Limpar</button>
+                <button type="submit" class="submit-btn" id="form-submit-btn">
+                    Confirmar
+                </button>
+                <button type="reset" class="reset-btn" id="form-reset-btn" onclick="verifyEdit()">
+                    Limpar
+                </button>
             </form>
         </div>
     </div>
@@ -68,53 +74,112 @@
                             <p th:text="'Data: ' + ${#temporals.format(buy.purchaseDate, 'dd/MM/yyyy HH:mm:ss')}"></p>
                         </div>
                         <div class="actions">
-                            
+                            <button type="button" class="edit-btn"
+                                th:attr="data-id=${buy.id}, data-user=${buy.user.name}, data-storeName=${buy.store.name}, data-storeId=${buy.store.id}, data-date=${buy.purchaseDate}"
+                                onclick="preencherFormulario(this)">
+                                Editar
+                            </button>
+
+                            <!-- Formulário de Exclusão -->
+                            <form th:action="@{/buy/{id}(id=${buy.id})}" th:method="post">
+                                <input type="hidden" name="_method" value="delete" />
+                                <button type="submit" class="delete-btn"
+                                    onclick="return confirm('Tem certeza que deseja excluir esta Compra?')">
+                                    Excluir
+                                </button>
+                            </form>
                         </div>
                     </div>
-                </li>                
+                </li>
             </ul>
         </div>
     </div>
 
     <script>
-        function preencherFormulario(button) {
-            const lojaName = button.getAttribute('data-loja');
-            const lojaId = button.getAttribute('data-id');
-
-            document.getElementById('loja').value = lojaName;
-
-            document.getElementById('storeId').value = lojaId;
-        }
+        let intervalId; // Variável para armazenar o intervalo de atualização do horário
+        let isEditing = false; // Variável para controlar se está no modo de edição
 
         function atualizarDataHora() {
-            const now = new Date();
-
-            const options = {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false,
-                timeZone: 'America/Sao_Paulo'
-            };
-
-            // Formata a data e hora no formato 'YYYY-MM-DD HH:mm:ss'
-            const dataHoraFormatada = new Intl.DateTimeFormat('pt-BR', options).format(now);
-
-            document.getElementById('data').value = dataHoraFormatada;
+            if (!isEditing) {
+                // Apenas atualiza se não estiver no modo de edição
+                const now = new Date();
+                const dataHoraFormatada = formatarData(now);
+                document.getElementById("data").value = dataHoraFormatada;
+            }
         }
 
-        setInterval(atualizarDataHora, 1000);
-
+        // Inicia a atualização automática do horário
+        intervalId = setInterval(atualizarDataHora, 1000);
         atualizarDataHora();
 
+        function formatarData(data) {
+            return new Intl.DateTimeFormat("pt-BR", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false,
+                timeZone: "America/Sao_Paulo",
+            }).format(new Date(data));
+        }
+
         function atualizarStoreId() {
-            const selectLoja = document.getElementById('loja');
-            document.getElementById('storeId').value = selectLoja.value;
+            const selectLoja = document.getElementById("loja");
+            document.getElementById("storeId").value = selectLoja.value;
+        }
+
+        function preencherFormulario(botao) {
+            isEditing = true; // Define que está no modo de edição
+            clearInterval(intervalId); // Para a atualização automática do horário
+
+            // Obtém os dados do botão clicado
+            let id = botao.getAttribute("data-id");
+            let usuario = botao.getAttribute("data-user");
+            let lojaNome = botao.getAttribute("data-storeName");
+            let lojaId = botao.getAttribute("data-storeId");
+            let data = botao.getAttribute("data-date");
+
+            // Preenche os campos do formulário principal
+            document.getElementById("buy-id").value = id;
+            document.getElementById("user").value = usuario;
+            document.getElementById("storeId").value = lojaId;
+            document.getElementById("data").value = formatarData(data);
+
+            // Seleciona a loja correta no <select>
+            let selectLoja = document.getElementById("loja");
+            for (let option of selectLoja.options) {
+                if (option.textContent.trim() === lojaNome.trim()) {
+                    option.selected = true;
+                    break;
+                }
+            }
+
+            // Altera o título e o botão do formulário
+            document.getElementById("form-title").innerText = "Editar Compra";
+            document.getElementById("form-submit-btn").innerText = "Salvar Alterações";
+
+            // Modifica a ação do formulário para enviar uma atualização
+            document.getElementById("buy-form").setAttribute("action", "/buy/update");
+        }
+
+        function verifyEdit() {
+            let titulo = document.getElementById("form-title").innerText;
+
+            if (titulo === "Editar Compra") {
+                isEditing = false; // Sai do modo de edição
+                intervalId = setInterval(atualizarDataHora, 1000); // Retorna a atualização do horário
+
+                document.getElementById("form-title").innerText = "Cadastrar Compra";
+                document.getElementById("form-submit-btn").innerText = "Cadastrar";
+                document.getElementById("buy-form").removeAttribute("action");
+
+                document.getElementById("buy-id").value = "";
+            }
         }
     </script>
+
 </body>
 
 </html>

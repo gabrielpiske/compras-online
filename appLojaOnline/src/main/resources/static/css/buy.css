@@ -189,24 +189,34 @@ h2 {
     gap: 10px;
 }
 
-.actions .add-btn {
-    padding: 5px;
+.actions .edit-btn,
+.actions .delete-btn {
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 12px;
     cursor: pointer;
-    width: 35px;
+    width: 200px;
     text-align: center;
 }
 
-.actions .add-btn{
-    background-color: #4C75CA;
+.actions .edit-btn {
+    background-color: #4CAF50;
     color: white;
 }
 
-.actions .add-btn:hover {
+.actions .delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.actions .edit-btn:hover,
+.actions .delete-btn:hover {
     opacity: 0.8;
+}
+
+.actions .delete-btn:active {
+    background-color: #d32f2f;
 }
 
 ::-webkit-scrollbar {

@@ -34,7 +34,7 @@ public class BuyController {
         List<Store> stores = storeService.findAll();
         List<Buy> buys = buyService.getPurchasesByUser(user);
 
-        //logs
+        // logs
         System.out.println("Usuário autenticado: " + user.getName());
         System.out.println("Compras encontradas: " + buys.size());
 
@@ -51,7 +51,7 @@ public class BuyController {
         return "redirect:/buy";
     }
 
-    @PostMapping("/buy/update/")
+    @PostMapping("/buy/update")
     public String updatePurchase(@RequestParam Long buyId, @RequestParam Long storeId) {
         buyService.updatePurchase(buyId, storeId);
         return "redirect:/buy";
@@ -60,7 +60,7 @@ public class BuyController {
     @DeleteMapping("/buy/{id}")
     public String deleteBuy(@PathVariable Long id) {
         buyService.deletePurchase(id);
-        return "redirect:/store";
+        return "redirect:/buy";
     }
 
 }
